@@ -1,0 +1,24 @@
+<!doctype html>
+<head>
+    <meta charset="{{ site.charset }}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="pingback" href="{{ site.pingback_url }}" />
+    <style>
+        [x-cloak] { display: none; }
+    </style>
+    {{function('wp_head')}}
+</head>
+
+<body class="{{body_class}}" data-template="base.twig">
+    {% include 'header.twig' %}
+
+    {% block content %}
+    Sorry, no content
+    {% endblock %}
+
+    {% block footer %}
+        {% include 'footer.twig' %}
+        {{ function('wp_footer') }}
+    {% endblock %}
+</body>
+</html>
