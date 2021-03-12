@@ -15,9 +15,9 @@ Timberland is an opinionated WordPress theme for component-based development usi
 
 Timberland builds your css and js files using Laravel Mix. This allows you to use the latest Javascript and CSS features.
 
-To build your assets for development, run `npm run dev` or `npm run watch` from the theme directory in the terminal.
+To build your assets for development, run `npm run development` or `npm run watch` from the theme directory in the terminal.
 
-When you're ready for production, run `npm run prod` from the theme directory in the terminal. This will minify and prepare your files for production. Additionally, a `build` directory is created with only the essential files needed for production.
+When you're ready for production, run `npm run production` from the theme directory in the terminal. This will minify and prepare your files for production. Additionally, a `build` directory is created with only the essential files needed for production.
 
 ## Components
 

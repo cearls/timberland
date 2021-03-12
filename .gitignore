@@ -4,3 +4,4 @@
 .DS_Store
 /build/
 /assets/build/
+mix-manifest.json
