@@ -1,5 +1,5 @@
 {
-  "name": "timberland",
+  "name": "cearls/timberland",
   "type": "wordpress-theme",
   "description": "A modern Wordpress theme using Timber, ACF, Tailwind CSS and Alpine JS",
   "license": "MIT",
