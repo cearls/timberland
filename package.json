@@ -30,6 +30,7 @@
     "tailwindcss": "^2.0.3"
   },
   "devDependencies": {
+    "@tailwindcss/jit": "^0.1.0",
     "cross-env": "^7.0.3",
     "laravel-mix": "^6.0.13",
     "laravel-mix-postcss-config": "^1.4.0",
