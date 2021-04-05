@@ -1,4 +1,5 @@
 module.exports = {
+  mode: 'jit',
   purge: [
     './views/**/*.twig',
     './components/**/*.twig',

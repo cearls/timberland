@@ -27,10 +27,9 @@
     "postcss": "^8.2.7",
     "postcss-import": "^14.0.0",
     "postcss-import-ext-glob": "^2.0.1",
-    "tailwindcss": "^2.0.3"
+    "tailwindcss": "^2.1.0"
   },
   "devDependencies": {
-    "@tailwindcss/jit": "^0.1.0",
     "cross-env": "^7.0.3",
     "laravel-mix": "^6.0.13",
     "laravel-mix-postcss-config": "^1.4.0",
