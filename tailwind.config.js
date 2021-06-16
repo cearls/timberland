@@ -1,8 +1,8 @@
 module.exports = {
   mode: 'jit',
   purge: [
-    './views/**/*.twig',
-    './components/**/*.twig',
+    './theme/views/**/*.twig',
+    './theme/components/**/*.twig',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

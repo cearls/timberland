@@ -16,7 +16,7 @@ use Timber\PostQuery;
 
 $timber = new Timber();
 
-Timber::$dirname = array('../views', '../components');
+Timber::$dirname = array('views', 'components');
 
 class Timberland extends Site
 {
@@ -99,8 +99,8 @@ class Timberland extends Site
         // wp_dequeue_style('wp-block-library-theme');
         wp_dequeue_script('jquery');
 
-        wp_enqueue_style('style', '/wp-content/themes/' . basename(dirname(__DIR__, 1)) . '/assets/build/app.css', array(), $version);
-        wp_enqueue_script('app', '/wp-content/themes/' . basename(dirname(__DIR__, 1)) . '/assets/build/app.js', array(), $version, true);
+        wp_enqueue_style('style', get_template_directory_uri() . '/assets/build/app.css', array(), $version);
+        wp_enqueue_script('app', get_template_directory_uri() . '/assets/build/app.js', array(), $version, true);
     }
 
     public function use_block_editor_for_post_type($is_enabled, $post_type)
