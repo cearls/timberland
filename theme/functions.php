@@ -89,18 +89,14 @@ class Timberland extends Site
 
     public function enqueue_scripts()
     {
-        $version = '0.1.0';
-
-        if (WP_DEBUG === true) {
-            $version = time();
-        }
-
         // wp_dequeue_style('wp-block-library');
         // wp_dequeue_style('wp-block-library-theme');
         wp_dequeue_script('jquery');
 
-        wp_enqueue_style('style', get_template_directory_uri() . '/assets/build/app.css', array(), $version);
-        wp_enqueue_script('app', get_template_directory_uri() . '/assets/build/app.js', array(), $version, true);
+        $mixPublicPath = get_template_directory() . '/assets/build';
+
+        wp_enqueue_style('style', get_template_directory_uri() . '/assets/build' . $this->mix("/app.css", $mixPublicPath));
+        wp_enqueue_script('app', get_template_directory_uri() . '/assets/build' . $this->mix("/app.js", $mixPublicPath), array(), '', true);
     }
 
     public function use_block_editor_for_post_type($is_enabled, $post_type)
@@ -171,6 +167,33 @@ class Timberland extends Site
         // ];
 
         // register_taxonomy("example", ["posttype"], $args);
+    }
+
+    public function mix($path, $manifestDirectory = '')
+    {
+        static $manifest;
+        if ($manifestDirectory && strpos($manifestDirectory, '/') !== 0) {
+            $manifestDirectory = "/{$manifestDirectory}";
+        }
+
+        if (! $manifest) {
+            if (! file_exists($manifestPath = $manifestDirectory.'/mix-manifest.json')) {
+                throw new Exception('The Mix manifest does not exist.');
+            }
+            $manifest = json_decode(file_get_contents($manifestPath), true);
+        }
+
+        if (strpos($path, '/') !== 0) {
+            $path = "/{$path}";
+        }
+
+        if (! array_key_exists($path, $manifest)) {
+            throw new Exception(
+                "Unable to locate Mix file: {$path}. Please check your webpack.mix.js output paths and try again."
+            );
+        }
+
+        return $manifest[$path];
     }
 }
 
