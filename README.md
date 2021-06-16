@@ -17,7 +17,7 @@ Timberland builds your css and js files using Laravel Mix. This allows you to us
 
 To build your assets for development, run `npm run development` or `npm run watch` from the theme directory in the terminal.
 
-When you're ready for production, run `npm run production` from the theme directory in the terminal. This will minify and prepare your files for production. Additionally, a `build` directory is created with only the essential files needed for production.
+When you're ready for production, run `npm run production` from the theme directory in the terminal.
 
 ## Components
 
@@ -30,19 +30,19 @@ A component is a self contained building block with its own template, scripts an
   ├── style.css
 ```
 
-To create a new component, add a new flexible content field layout. Then, create a directory in `components` named the same as the field layout name. Add your `index.twig` and optional css and js files and it's ready to be used on a page.
+To create a new component, add a new flexible content field layout. Then, create a directory in `theme/components` named the same as the field layout name. Add your `index.twig` and optional css and js files and it's ready to be used on a page.
 
 ## Directory Structure
-
-`assets/` contain all of your fonts, images, styles and scripts.
-
-`components/` contain all of your site's components. These components are available to use on any page via an Advanced Custom Fields (ACF) flexible content field. Each component has its own template, script and style files.
 
 `theme/` contains all of the WordPress core templates files.
 
 `theme/acf-json/` contain all of your Advanced Custom Fields json files. These files are automatically created/updated using ACF's Local JSON feature.
 
-`views/` contains all of your Twig templates. These pretty much correspond 1 to 1 with the PHP files that respond to the WordPress template hierarchy. At the end of each PHP template, you'll notice a `Timber::render()` function whose first parameter is the Twig file where that data (or `$context`) will be used.
+`theme/assets/` contain all of your fonts, images, styles and scripts.
+
+`theme/components/` contain all of your site's components. These components are available to use on any page via an Advanced Custom Fields (ACF) flexible content field. Each component has its own template, script and style files.
+
+`theme/views/` contains all of your Twig templates. These pretty much correspond 1 to 1 with the PHP files that respond to the WordPress template hierarchy. At the end of each PHP template, you'll notice a `Timber::render()` function whose first parameter is the Twig file where that data (or `$context`) will be used.
 
 ## License
 MIT © Chris Earls
