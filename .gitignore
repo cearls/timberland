@@ -2,6 +2,5 @@
 /vendor/
 *.log
 .DS_Store
-/build/
-/assets/build/
+/theme/assets/build/
 mix-manifest.json
