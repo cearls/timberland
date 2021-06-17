@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+const fs = require('fs');
 
 mix
   .setPublicPath('theme/assets/build/')
@@ -8,3 +8,8 @@ mix
     require('tailwindcss'),
   ])
   .version();
+
+if (fs.existsSync('browsersync.config.js')) {
+  const config = require('./browsersync.config');
+  mix.browserSync(config);
+}
