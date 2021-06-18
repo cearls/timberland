@@ -19,6 +19,14 @@ To build your assets for development, run `npm run development` or `npm run watc
 
 When you're ready for production, run `npm run production` from the theme directory in the terminal.
 
+### Browsersync
+
+To use Browsersync during local development, rename `browsersync.config.example.js` to `browsersync.config.js` and update the proxy to match your local development URL. Other options can be seen in the [Browsersync documentation](https://browsersync.io/docs/options/).
+
+### Versioning
+
+To assist with long-term caching, file hashing (e.g. `app.js?id=8e5c48eadbfdd5458ec6`) is enabled by default. This is useful for cache-busting purposes.
+
 ## Components
 
 A component is a self contained building block with its own template, scripts and styles. Each component corresponds 1 to 1 with the "Page Builder" flexible content field layouts. For example, the provided "Example" component has a flexible content field layout named "example." A component's css and js files get imported into the main css and js files.
