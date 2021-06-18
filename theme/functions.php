@@ -3,7 +3,7 @@
 /**
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 0.1.0
+ * @since Timberland 0.2.0
  */
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
