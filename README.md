@@ -21,7 +21,7 @@ When you're ready for production, run `npm run production` from the theme direct
 
 ### Browsersync
 
-To use Browsersync during local development, rename `browsersync.config.example.js` to `browsersync.config.js` and update the proxy to match your local development URL. Other options can be seen in the [Browsersync documentation](https://browsersync.io/docs/options/).
+To use Browsersync during local development, rename `browsersync.config-sample.js` to `browsersync.config.js` and update the proxy to match your local development URL. Other options can be seen in the [Browsersync documentation](https://browsersync.io/docs/options/).
 
 ### Versioning
 
