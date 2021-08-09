@@ -40,6 +40,20 @@ A component is a self contained building block with its own template, scripts an
 
 To create a new component, add a new flexible content field layout. Then, create a directory in `theme/components` named the same as the field layout name. Add your `index.twig` and optional css and js files and it's ready to be used on a page.
 
+### Accessing Data
+
+You access your component's data in the index.twig file by using the `data` variable. The example below shows how to display a component's field. We'll use "heading" as the example ACF field name, but it could be whatever name you give your field.
+
+`{{ data.heading }}`
+
+Here's an example of how to loop through a repeater field where "features" is the ACF field name and the repeater field has a heading field.
+
+```
+{% for feature in data.features %}
+{{ feature.heading }}
+{% endfor %}
+```
+
 ## Directory Structure
 
 `theme/` contains all of the WordPress core templates files.
