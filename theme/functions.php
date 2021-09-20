@@ -173,25 +173,23 @@ class Timberland extends Site
     }
 
     public function acf_register_blocks() {
-        if( function_exists('acf_register_block_type') ) {
-            foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
-                if ($dir->isDot()) continue;
+        foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
+            if ($dir->isDot()) continue;
 
-                $settings = array(
-                    'name' => $dir->getFilename(),
-                    'title' => __(ucwords($dir->getFilename())),
-                    'description' => __(''),
-                    'render_callback' => [$this, 'acf_block_render_callback'],
-                    'category' => 'formatting'
-                );
+            $settings = [
+                'name' => $dir->getFilename(),
+                'title' => __(ucwords($dir->getFilename())),
+                'description' => __(''),
+                'render_callback' => [$this, 'acf_block_render_callback'],
+                'category' => 'formatting'
+            ];
 
-                if (is_admin()) {
-                    $settings['enqueue_style'] = get_template_directory_uri() . '/assets/build/app.css';
-                    $settings['enqueue_script'] = get_template_directory_uri() . '/assets/build/app.js';
-                }
-
-                acf_register_block_type($settings);
+            if (is_admin()) {
+                $settings['enqueue_style'] = get_template_directory_uri() . '/assets/build/app.css';
+                $settings['enqueue_script'] = get_template_directory_uri() . '/assets/build/app.js';
             }
+
+            acf_register_block_type($settings);
         }
     }
 
@@ -206,7 +204,7 @@ class Timberland extends Site
     }
 
     public function allowed_block_types() {
-        $allowed_blocks = array();
+        $allowed_blocks = [];
 
         foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
             $allowed_blocks[] = 'acf/' . $dir;
