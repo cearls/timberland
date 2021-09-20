@@ -2,7 +2,7 @@ module.exports = {
   mode: 'jit',
   purge: [
     './theme/views/**/*.twig',
-    './theme/components/**/*.twig',
+    './theme/blocks/**/*.twig',
   ],
   darkMode: false, // or 'media' or 'class'
   theme: {

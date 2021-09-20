@@ -1,4 +1,0 @@
-{% for component in post.meta('components') %}
-    {% set componentName = component.acf_fc_layout %}
-    {% include componentName ~ '/index.twig' ignore missing with { 'data': component } %}
-{% endfor %}

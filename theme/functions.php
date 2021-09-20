@@ -16,7 +16,7 @@ use Timber\PostQuery;
 
 $timber = new Timber();
 
-Timber::$dirname = array('views', 'components');
+Timber::$dirname = array('views', 'blocks');
 
 class Timberland extends Site
 {
@@ -29,6 +29,8 @@ class Timberland extends Site
         add_filter('use_block_editor_for_post_type', [$this, 'use_block_editor_for_post_type'], 10, 2);
         add_action('init', [$this, 'register_custom_post_types']);
         add_action('init', [$this, 'register_taxonomies']);
+        add_action('acf/init', [$this, 'acf_register_blocks']);
+        add_filter('allowed_block_types', [$this, 'allowed_block_types']);
 
         parent::__construct();
     }
@@ -101,8 +103,9 @@ class Timberland extends Site
 
     public function use_block_editor_for_post_type($is_enabled, $post_type)
     {
-        if ($post_type === 'page') return false;
-        return $is_enabled;
+        // if ($post_type === 'page') return false;
+        // return $is_enabled;
+        return true;
     }
 
     public function register_custom_post_types()
@@ -167,6 +170,49 @@ class Timberland extends Site
         // ];
 
         // register_taxonomy("example", ["posttype"], $args);
+    }
+
+    public function acf_register_blocks() {
+        if( function_exists('acf_register_block_type') ) {
+            foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
+                if ($dir->isDot()) continue;
+
+                $settings = array(
+                    'name' => $dir->getFilename(),
+                    'title' => __(ucwords($dir->getFilename())),
+                    'description' => __(''),
+                    'render_callback' => [$this, 'acf_block_render_callback'],
+                    'category' => 'formatting'
+                );
+
+                if (is_admin()) {
+                    $settings['enqueue_style'] = get_template_directory_uri() . '/assets/build/app.css';
+                    $settings['enqueue_script'] = get_template_directory_uri() . '/assets/build/app.js';
+                }
+
+                acf_register_block_type($settings);
+            }
+        }
+    }
+
+    public function acf_block_render_callback( $block, $content = '', $is_preview = false ) {
+        $context = Timber::context();
+        $context['block'] = $block;
+        $context['fields'] = get_fields();
+        $context['is_preview'] = $is_preview;
+        $dirName = str_replace('acf/', '', $block['name']);
+    
+        Timber::render('blocks/'. $dirName . '/index.twig', $context);
+    }
+
+    public function allowed_block_types() {
+        $allowed_blocks = array();
+
+        foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
+            $allowed_blocks[] = 'acf/' . $dir;
+        }
+
+        return $allowed_blocks;
     }
 
     public function mix($path, $manifestDirectory = '')
