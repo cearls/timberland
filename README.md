@@ -1,6 +1,6 @@
 # Timberland :evergreen_tree:
 
-Timberland is an opinionated WordPress theme for block-based development using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Laravel Mix](https://github.com/JeffreyWay/laravel-mix), [Tailwind](https://tailwindcss.com/) and [Alpine.js](https://github.com/alpinejs/alpine).
+Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Laravel Mix](https://github.com/JeffreyWay/laravel-mix), [Tailwind](https://tailwindcss.com/) and [Alpine.js](https://github.com/alpinejs/alpine).
 
 ## Installation
 
@@ -28,7 +28,7 @@ To assist with long-term caching, file hashing (e.g. `app.js?id=8e5c48eadbfdd545
 
 ## Blocks
 
-A block is self contained page section and includes its own template, scripts and styles. 
+A block is a self-contained page section and includes its own template, scripts and styles. 
 
 ```
   example/
@@ -39,9 +39,9 @@ A block is self contained page section and includes its own template, scripts an
 
 To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and optional css and js files and it's ready to be used with the WordPress block editor. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
 
-### Accessing Data
+### Accessing Fields
 
-You access your block's data in the index.twig file by using the `fields` variable. The example below shows how to display a block's field. We'll use "heading" as the example ACF field name, but it could be whatever name you give your field.
+You access your block's fields in the index.twig file by using the `fields` variable. The example below shows how to display a block's field. We'll use "heading" as the example ACF field name, but it could be whatever name you give your field.
 
 `{{ fields.heading }}`
 
@@ -61,7 +61,7 @@ Here's an example of how to loop through a repeater field where "features" is th
 
 `theme/assets/` contain all of your fonts, images, styles and scripts.
 
-`theme/components/` contain all of your site's components. These components are available to use on any page via an Advanced Custom Fields (ACF) flexible content field. Each component has its own template, script and style files.
+`theme/blocks/` contain all of your site's blocks. These blocks are available to use on any page via the block editor. Each block has its own template, script and style files.
 
 `theme/views/` contains all of your Twig templates. These pretty much correspond 1 to 1 with the PHP files that respond to the WordPress template hierarchy. At the end of each PHP template, you'll notice a `Timber::render()` function whose first parameter is the Twig file where that data (or `$context`) will be used.
 
