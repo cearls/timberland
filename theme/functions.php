@@ -26,11 +26,11 @@ class Timberland extends Site
         add_action('after_setup_theme', [$this, 'theme_supports']);
         add_filter('timber/context', [$this, 'add_to_context']);
         add_filter('timber/twig', [$this, 'add_to_twig']);
-        add_filter('use_block_editor_for_post_type', [$this, 'use_block_editor_for_post_type'], 10, 2);
         add_action('init', [$this, 'register_custom_post_types']);
         add_action('init', [$this, 'register_taxonomies']);
         add_action('acf/init', [$this, 'acf_register_blocks']);
         add_filter('allowed_block_types', [$this, 'allowed_block_types']);
+        add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
 
         parent::__construct();
     }
@@ -72,6 +72,8 @@ class Timberland extends Site
         add_theme_support('menus');
         add_theme_support('post-thumbnails');
         add_theme_support('title-tag');
+        add_theme_support( 'editor-styles' );
+        add_editor_style( 'assets/styles/editor-style.css' );
 
         /** Removing the Website field from WordPress comments is a proven way to reduce spam */
         add_filter('comment_form_default_fields', 'remove_website_field');
@@ -91,21 +93,15 @@ class Timberland extends Site
 
     public function enqueue_scripts()
     {
-        // wp_dequeue_style('wp-block-library');
-        // wp_dequeue_style('wp-block-library-theme');
+        wp_dequeue_style('wp-block-library');
+        wp_dequeue_style('wp-block-library-theme');
+        wp_dequeue_style('wc-block-style');
         wp_dequeue_script('jquery');
 
         $mixPublicPath = get_template_directory() . '/assets/build';
 
         wp_enqueue_style('style', get_template_directory_uri() . '/assets/build' . $this->mix("/app.css", $mixPublicPath));
         wp_enqueue_script('app', get_template_directory_uri() . '/assets/build' . $this->mix("/app.js", $mixPublicPath), array(), '', true);
-    }
-
-    public function use_block_editor_for_post_type($is_enabled, $post_type)
-    {
-        // if ($post_type === 'page') return false;
-        // return $is_enabled;
-        return true;
     }
 
     public function register_custom_post_types()
@@ -181,13 +177,8 @@ class Timberland extends Site
                 'title' => __(ucwords($dir->getFilename())),
                 'description' => __(''),
                 'render_callback' => [$this, 'acf_block_render_callback'],
-                'category' => 'formatting'
+                'category' => 'common'
             ];
-
-            if (is_admin()) {
-                $settings['enqueue_style'] = get_template_directory_uri() . '/assets/build/app.css';
-                $settings['enqueue_script'] = get_template_directory_uri() . '/assets/build/app.js';
-            }
 
             acf_register_block_type($settings);
         }
@@ -211,6 +202,11 @@ class Timberland extends Site
         }
 
         return $allowed_blocks;
+    }
+
+    public function enqueue_block_editor_assets() {
+        wp_enqueue_style('style', get_template_directory_uri() . '/assets/build/app.css');
+        wp_enqueue_script('app', get_template_directory_uri() . '/assets/build/app.js');
     }
 
     public function mix($path, $manifestDirectory = '')
