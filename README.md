@@ -2,6 +2,8 @@
 
 Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Laravel Mix](https://github.com/JeffreyWay/laravel-mix), [Tailwind](https://tailwindcss.com/) and [Alpine.js](https://github.com/alpinejs/alpine).
 
+As of version 1.0, Timberland now uses the WordPress block editor to visually edit the site. This is made possible by the [ACF Blocks feature](https://www.advancedcustomfields.com/resources/blocks/).
+
 ## Installation
 
 1. Download the zip for this theme (or clone it) and move it to `wp-content/themes` in your WordPress installation.
@@ -28,7 +30,7 @@ To assist with long-term caching, file hashing (e.g. `app.js?id=8e5c48eadbfdd545
 
 ## Blocks
 
-A block is a self-contained page section and includes its own template, scripts and styles. 
+A block is a self-contained page section and includes its own template, script, style and functions files.
 
 ```
   example/
@@ -38,7 +40,7 @@ A block is a self-contained page section and includes its own template, scripts 
   ├── style.css
 ```
 
-To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and optional css and js files and it's ready to be used with the WordPress block editor. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
+To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and optional style.css, script.js and functions.php files and it's ready to be used with the WordPress block editor. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
 
 ### Accessing Fields
 
