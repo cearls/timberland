@@ -41,21 +41,6 @@ class Timberland extends Site
         $context['site'] = $this;
         $context['menu'] = new Menu();
         
-        $args = array(
-            'post_type' => 'page',
-            'posts_per_page' => -1,
-        );
-
-        $context['pages'] = new PostQuery($args);
-
-        $context['options'] = get_fields('option');
-
-        if (function_exists('yoast_breadcrumb')) {
-            $context['breadcrumbs'] = yoast_breadcrumb('<nav>', '</nav>', false);
-        }
-
-        $context['options'] = get_fields('option');
-        
         // Require block functions files
         foreach (glob(dirname(__FILE__) . "/blocks/*/functions.php") as $file) {
             require_once $file;
@@ -86,21 +71,6 @@ class Timberland extends Site
         add_theme_support('title-tag');
         add_theme_support('editor-styles');
         add_editor_style('assets/build/editor-style.css');
-
-        /** Removing the Website field from WordPress comments is a proven way to reduce spam */
-        add_filter('comment_form_default_fields', 'remove_website_field');
-        function remove_website_field($fields)
-        {
-            if (isset($fields['url'])) {
-                unset($fields['url']);
-            }
-            return $fields;
-        }
-
-        /** Limit comment depth to two. If you need more, you will need to adjust the Tailwind styling */
-        add_filter('thread_comments_depth_max', function ($max) {
-            return 2;
-        });
     }
 
     public function enqueue_scripts()
@@ -230,7 +200,7 @@ class Timberland extends Site
     }
 
     public function enqueue_block_editor_assets() {
-        wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+        //wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
         wp_enqueue_script('app', get_template_directory_uri() . '/assets/build/app.js');
     }
 
