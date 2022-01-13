@@ -9,7 +9,7 @@
  *
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 0.2.0
+ * @since Timberland 1.0.0
  */
 
 ob_start();
