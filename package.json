@@ -23,17 +23,17 @@
   "dependencies": {
     "@tailwindcss/typography": "^0.4.1",
     "alpinejs": "^2.8.2",
-    "autoprefixer": "^10.2.6",
-    "postcss": "^8.3.4",
+    "autoprefixer": "^10.4.2",
+    "postcss": "^8.4.5",
     "postcss-import": "^14.0.2",
     "postcss-import-ext-glob": "^2.0.1",
-    "tailwindcss": "^2.2.2"
+    "tailwindcss": "^2.2.19"
   },
   "devDependencies": {
-    "browser-sync": "^2.26.14",
+    "browser-sync": "^2.27.7",
     "browser-sync-webpack-plugin": "^2.3.0",
     "cross-env": "^7.0.3",
-    "laravel-mix": "^6.0.20",
+    "laravel-mix": "^6.0.39",
     "vue-template-compiler": "^2.6.14"
   }
 }

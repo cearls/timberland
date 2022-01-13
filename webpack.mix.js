@@ -7,7 +7,10 @@ mix
   .postCss('theme/assets/styles/app.css', 'theme/assets/build/', [
     require('tailwindcss'),
   ])
-  .version();
+  .version()
+  .postCss('theme/assets/styles/editor-style.css', 'theme/assets/build/', [
+    require('tailwindcss'),
+  ]);
 
 if (fs.existsSync('browsersync.config.js')) {
   const config = require('./browsersync.config');

@@ -28,8 +28,9 @@ class Timberland extends Site
         add_filter('timber/twig', [$this, 'add_to_twig']);
         add_action('init', [$this, 'register_custom_post_types']);
         add_action('init', [$this, 'register_taxonomies']);
+        add_action('block_categories_all', [$this, 'block_categories_all']);
         add_action('acf/init', [$this, 'acf_register_blocks']);
-        add_filter('allowed_block_types', [$this, 'allowed_block_types']);
+        //add_filter('allowed_block_types', [$this, 'allowed_block_types']);
         add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
 
         parent::__construct();
@@ -39,7 +40,7 @@ class Timberland extends Site
     {
         $context['site'] = $this;
         $context['menu'] = new Menu();
-
+        
         $args = array(
             'post_type' => 'page',
             'posts_per_page' => -1,
@@ -48,6 +49,17 @@ class Timberland extends Site
         $context['pages'] = new PostQuery($args);
 
         $context['options'] = get_fields('option');
+
+        if (function_exists('yoast_breadcrumb')) {
+            $context['breadcrumbs'] = yoast_breadcrumb('<nav>', '</nav>', false);
+        }
+
+        $context['options'] = get_fields('option');
+        
+        // Require block functions files
+        foreach (glob(dirname(__FILE__) . "/blocks/*/functions.php") as $file) {
+            require_once $file;
+        }
 
         return $context;
     }
@@ -72,8 +84,8 @@ class Timberland extends Site
         add_theme_support('menus');
         add_theme_support('post-thumbnails');
         add_theme_support('title-tag');
-        add_theme_support( 'editor-styles' );
-        add_editor_style( 'assets/styles/editor-style.css' );
+        add_theme_support('editor-styles');
+        add_editor_style('assets/build/editor-style.css');
 
         /** Removing the Website field from WordPress comments is a proven way to reduce spam */
         add_filter('comment_form_default_fields', 'remove_website_field');
@@ -168,16 +180,27 @@ class Timberland extends Site
         // register_taxonomy("example", ["posttype"], $args);
     }
 
+    public function block_categories_all($categories) {
+        return array_merge([['slug' => 'custom', 'title' => __('Custom')]], $categories);
+    }
+
     public function acf_register_blocks() {
         foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
             if ($dir->isDot()) continue;
 
             $settings = [
                 'name' => $dir->getFilename(),
-                'title' => __(ucwords($dir->getFilename())),
+                'title' => __(ucwords(str_replace('-', ' ', $dir->getFilename()))),
                 'description' => __(''),
                 'render_callback' => [$this, 'acf_block_render_callback'],
-                'category' => 'common'
+                'category' => 'custom',
+                'align' => false,
+                'example'  => array(
+                    'attributes' => array(
+                        'mode' => 'preview',
+                        'data' => array()
+                    )
+                )
             ];
 
             acf_register_block_type($settings);
@@ -195,7 +218,9 @@ class Timberland extends Site
     }
 
     public function allowed_block_types() {
-        $allowed_blocks = [];
+        $allowed_blocks = [
+            'core/columns'
+        ];
 
         foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
             $allowed_blocks[] = 'acf/' . $dir;
@@ -205,7 +230,7 @@ class Timberland extends Site
     }
 
     public function enqueue_block_editor_assets() {
-        wp_enqueue_style('style', get_template_directory_uri() . '/assets/build/app.css');
+        wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
         wp_enqueue_script('app', get_template_directory_uri() . '/assets/build/app.js');
     }
 

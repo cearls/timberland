@@ -33,6 +33,7 @@ A block is a self-contained page section and includes its own template, scripts 
 ```
   example/
   ├── index.twig
+  ├── functions.php
   ├── script.js
   ├── style.css
 ```

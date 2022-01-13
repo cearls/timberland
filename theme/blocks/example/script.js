@@ -1,1 +1,1 @@
-console.log('hello from example component');
+console.log('hello from example block');
