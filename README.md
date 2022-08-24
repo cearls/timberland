@@ -18,7 +18,17 @@ Timberland builds your css and js files using Laravel Mix. This allows you to us
 
 To build your assets for development, run `npm run development` or `npm run watch` from the theme directory in the terminal.
 
+## Production
+
 When you're ready for production, run `npm run production` from the theme directory in the terminal.
+
+If you're developing locally and moving files to your production environment, only the `theme` and `vendor` directories are needed inside the `timberland` theme directory. The theme directory structure should look like the following:
+
+```
+  timberland/
+  ├── theme/
+  ├── vendor/
+```
 
 ### Browsersync
 
