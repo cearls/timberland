@@ -1,6 +1,6 @@
 {
   "name": "timberland",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A modern Wordpress theme using Timber, ACF, Tailwind CSS and Alpine JS",
   "main": "index.js",
   "scripts": {
