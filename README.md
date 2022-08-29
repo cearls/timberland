@@ -18,6 +18,14 @@ Timberland builds your css and js files using Laravel Mix. This allows you to us
 
 To build your assets for development, run `npm run development` or `npm run watch` from the theme directory in the terminal.
 
+### Browsersync
+
+To use Browsersync during local development, rename `browsersync.config-sample.js` to `browsersync.config.js` and update the proxy to match your local development URL. Other options can be seen in the [Browsersync documentation](https://browsersync.io/docs/options/).
+
+### Versioning
+
+To assist with long-term caching, file hashing (e.g. `app.js?id=8e5c48eadbfdd5458ec6`) is enabled by default. This is useful for cache-busting purposes.
+
 ## Production
 
 When you're ready for production, run `npm run production` from the theme directory in the terminal.
@@ -29,14 +37,6 @@ If you're developing locally and moving files to your production environment, on
   ├── theme/
   ├── vendor/
 ```
-
-### Browsersync
-
-To use Browsersync during local development, rename `browsersync.config-sample.js` to `browsersync.config.js` and update the proxy to match your local development URL. Other options can be seen in the [Browsersync documentation](https://browsersync.io/docs/options/).
-
-### Versioning
-
-To assist with long-term caching, file hashing (e.g. `app.js?id=8e5c48eadbfdd5458ec6`) is enabled by default. This is useful for cache-busting purposes.
 
 ## Blocks
 
