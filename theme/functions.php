@@ -207,9 +207,6 @@ class Timberland extends Site
     public function mix($path, $manifestDirectory = '')
     {
         static $manifest;
-        if ($manifestDirectory && strpos($manifestDirectory, '/') !== 0) {
-            $manifestDirectory = "/{$manifestDirectory}";
-        }
 
         if (! $manifest) {
             if (! file_exists($manifestPath = $manifestDirectory.'/mix-manifest.json')) {
