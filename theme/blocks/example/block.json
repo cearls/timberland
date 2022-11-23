@@ -1,0 +1,10 @@
+{
+    "name": "acf/example",
+    "title": "Example",
+    "description": "A custom example block.",
+    "category": "custom",
+    "acf": {
+        "mode": "preview",
+        "renderCallback": "Timberland::acf_block_render_callback"
+    }
+}

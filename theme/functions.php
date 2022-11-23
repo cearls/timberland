@@ -155,36 +155,25 @@ class Timberland extends Site
     }
 
     public function acf_register_blocks() {
+        $blocks = [];
         foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
             if ($dir->isDot()) continue;
-
-            $settings = [
-                'name' => $dir->getFilename(),
-                'title' => __(ucwords(str_replace('-', ' ', $dir->getFilename()))),
-                'description' => __(''),
-                'render_callback' => [$this, 'acf_block_render_callback'],
-                'category' => 'custom',
-                'align' => false,
-                'example'  => array(
-                    'attributes' => array(
-                        'mode' => 'preview',
-                        'data' => array()
-                    )
-                )
-            ];
-
-            acf_register_block_type($settings);
+            $blocks[] = $dir->getPathname();
+        }
+        asort($blocks);
+        foreach ($blocks as $block) {
+            register_block_type($block);
         }
     }
 
-    public function acf_block_render_callback( $block, $content = '', $is_preview = false ) {
+    public function acf_block_render_callback($attributes, $content) {
         $context = Timber::context();
-        $context['block'] = $block;
+        //$context['block'] = $block;
         $context['fields'] = get_fields();
-        $context['is_preview'] = $is_preview;
-        $dirName = str_replace('acf/', '', $block['name']);
+        //$context['is_preview'] = $is_preview;
+        $template = $attributes['path'] . '/index.twig';
     
-        Timber::render('blocks/'. $dirName . '/index.twig', $context);
+        Timber::render($template, $context);
     }
 
     public function allowed_block_types() {
