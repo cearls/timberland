@@ -9,7 +9,7 @@ body {
 }
 
 .wp-block{
-    @apply max-w-screen-xl;
+    @apply max-w-screen-xl my-8;
 }
 
 .wp-block[data-align=wide] {
