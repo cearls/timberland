@@ -156,13 +156,43 @@ class Timberland extends Site
 
     public function acf_register_blocks() {
         $blocks = [];
+        
         foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
             if ($dir->isDot()) continue;
-            $blocks[] = $dir->getPathname();
+
+            if (file_exists($dir->getPathname() . '/block.json')) {
+                $blocks[] = $dir->getPathname();
+            }
+            else {
+                $blocks[] = [
+                    'name' => 'acf/' . $dir->getFilename(),
+                    'title' => __(ucwords(str_replace('-', ' ', $dir->getFilename())))
+                ];
+            }
         }
+        
         asort($blocks);
+        
         foreach ($blocks as $block) {
-            register_block_type($block);
+            if (is_array($block)) {
+                register_block_type($block['name'], [
+                    'api_version' => 2,
+                    'title' => $block['title'],
+                    'description' => '',
+                    'category' => 'custom',
+                    'acf' => [
+                        'mode' => 'preview',
+                        'renderCallback' => 'Timberland::acf_block_render_callback',
+                    ],
+                    'supports' => [
+                        'align' => false,
+                        'jsx' => false
+                    ]
+                ]);
+            }
+            else {
+                register_block_type($block);
+            }
         }
     }
 

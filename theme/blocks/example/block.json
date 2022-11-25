@@ -1,13 +1,22 @@
 {
+  "apiVersion": 2,
   "name": "acf/example",
   "title": "Example",
   "description": "A custom example block.",
   "category": "custom",
   "acf": {
-    "mode": "preview",
     "renderCallback": "Timberland::acf_block_render_callback"
   },
   "supports": {
-    "jsx": false
-  }
+    "jsx": false,
+    "align": false
+  },
+  "example": {
+		"attributes": {
+			"mode": "preview",
+			"data": {
+				"_is_preview": "true"
+			}
+		}
+	}
 }
