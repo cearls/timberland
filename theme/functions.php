@@ -163,44 +163,20 @@ class Timberland extends Site
             if (file_exists($dir->getPathname() . '/block.json')) {
                 $blocks[] = $dir->getPathname();
             }
-            else {
-                $blocks[] = [
-                    'name' => 'acf/' . $dir->getFilename(),
-                    'title' => __(ucwords(str_replace('-', ' ', $dir->getFilename())))
-                ];
-            }
         }
         
         asort($blocks);
-        
-        foreach ($blocks as $block) {
-            if (is_array($block)) {
-                register_block_type($block['name'], [
-                    'api_version' => 2,
-                    'title' => $block['title'],
-                    'description' => '',
-                    'category' => 'custom',
-                    'acf' => [
-                        'mode' => 'preview',
-                        'renderCallback' => 'Timberland::acf_block_render_callback',
-                    ],
-                    'supports' => [
-                        'align' => false,
-                        'jsx' => false
-                    ]
-                ]);
-            }
-            else {
-                register_block_type($block);
-            }
+       
+        foreach($blocks as $block) {
+            register_block_type($block);
         }
     }
 
     public function acf_block_render_callback($attributes, $content) {
         $context = Timber::context();
-        //$context['block'] = $block;
+        $context['post'] = new Post();
+        $context['block'] = ['id' => uniqid()];
         $context['fields'] = get_fields();
-        //$context['is_preview'] = $is_preview;
         $template = $attributes['path'] . '/index.twig';
     
         Timber::render($template, $context);
@@ -249,3 +225,13 @@ class Timberland extends Site
 }
 
 new Timberland();
+
+function acf_block_render_callback($attributes, $content) {
+    $context = Timber::context();
+    $context['post'] = new Post();
+    $context['block'] = ['id' => uniqid()];
+    $context['fields'] = get_fields();
+    $template = $attributes['path'] . '/index.twig';
+
+    Timber::render($template, $context);
+}
