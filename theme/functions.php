@@ -226,12 +226,12 @@ class Timberland extends Site
 
 new Timberland();
 
-function acf_block_render_callback($attributes, $content) {
+function acf_block_render_callback($block, $content) {
     $context = Timber::context();
     $context['post'] = new Post();
-    $context['block'] = ['id' => uniqid()];
+    $context['block'] = $block;
     $context['fields'] = get_fields();
-    $template = $attributes['path'] . '/index.twig';
+    $template = $block['path'] . '/index.twig';
 
     Timber::render($template, $context);
 }
