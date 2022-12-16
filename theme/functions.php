@@ -40,11 +40,6 @@ class Timberland extends Site
     {
         $context['site'] = $this;
         $context['menu'] = new Menu();
-        
-        // Require block functions files
-        foreach (glob(dirname(__FILE__) . "/blocks/*/functions.php") as $file) {
-            require_once $file;
-        }
 
         return $context;
     }
@@ -172,15 +167,15 @@ class Timberland extends Site
         }
     }
 
-    public function acf_block_render_callback($attributes, $content) {
-        $context = Timber::context();
-        $context['post'] = new Post();
-        $context['block'] = ['id' => uniqid()];
-        $context['fields'] = get_fields();
-        $template = $attributes['path'] . '/index.twig';
+    // public function acf_block_render_callback($attributes, $content) {
+    //     $context = Timber::context();
+    //     $context['post'] = new Post();
+    //     $context['block'] = ['id' => uniqid()];
+    //     $context['fields'] = get_fields();
+    //     $template = $attributes['path'] . '/index.twig';
     
-        Timber::render($template, $context);
-    }
+    //     Timber::render($template, $context);
+    // }
 
     public function allowed_block_types() {
         $allowed_blocks = [
@@ -234,4 +229,9 @@ function acf_block_render_callback($block, $content) {
     $template = $block['path'] . '/index.twig';
 
     Timber::render($template, $context);
+}
+
+// Require block functions files
+foreach (glob(dirname(__FILE__) . "/blocks/*/functions.php") as $file) {
+    require_once $file;
 }
