@@ -3,7 +3,7 @@
 /**
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 1.1.0
+ * @since Timberland 1.2.0
  */
 
 use Timber\PostQuery;
