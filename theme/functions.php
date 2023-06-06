@@ -12,7 +12,6 @@ use Timber\Menu;
 use Timber\Post;
 use Timber\Site;
 use Timber\Timber;
-use Timber\PostQuery;
 
 $timber = new Timber();
 
@@ -26,8 +25,6 @@ class Timberland extends Site
         add_action('after_setup_theme', [$this, 'theme_supports']);
         add_filter('timber/context', [$this, 'add_to_context']);
         add_filter('timber/twig', [$this, 'add_to_twig']);
-        add_action('init', [$this, 'register_custom_post_types']);
-        add_action('init', [$this, 'register_taxonomies']);
         add_action('block_categories_all', [$this, 'block_categories_all']);
         add_action('acf/init', [$this, 'acf_register_blocks']);
         //add_filter('allowed_block_types', [$this, 'allowed_block_types']);
@@ -40,6 +37,11 @@ class Timberland extends Site
     {
         $context['site'] = $this;
         $context['menu'] = new Menu();
+
+        // Require block functions files
+        foreach (glob(dirname(__FILE__) . "/blocks/*/functions.php") as $file) {
+            require_once $file;
+        }
 
         return $context;
     }
@@ -81,77 +83,15 @@ class Timberland extends Site
         wp_enqueue_script('app', get_template_directory_uri() . '/assets/build' . $this->mix("/app.js", $mixPublicPath), array(), '', true);
     }
 
-    public function register_custom_post_types()
+    public function block_categories_all($categories)
     {
-        // Example
-        // $labels = [
-        //     "name" => "Example",
-        //     "singular_name" => "Example",
-        // ];
-
-        // $args = [
-        //     "label" => "Example",
-        //     "labels" => $labels,
-        //     "description" => "",
-        //     "public" => true,
-        //     "publicly_queryable" => true,
-        //     "show_ui" => true,
-        //     "show_in_rest" => true,
-        //     "rest_base" => "",
-        //     "rest_controller_class" => "WP_REST_Posts_Controller",
-        //     "has_archive" => false,
-        //     "show_in_menu" => true,
-        //     "show_in_nav_menus" => true,
-        //     "delete_with_user" => false,
-        //     "exclude_from_search" => false,
-        //     "capability_type" => "post",
-        //     "map_meta_cap" => true,
-        //     "hierarchical" => false,
-        //     "rewrite" => ["slug" => "example", "with_front" => true],
-        //     "query_var" => true,
-        //     "menu_icon" => "dashicons-groups",
-        //     "supports" => ["title"],
-        // ];
-
-        // register_post_type("example", $args);
-    }
-
-    public function register_taxonomies()
-    {
-        // Example
-        // $labels = [
-        //     "name" => "Example",
-        //     "singular_name" => "Example",
-        // ];
-
-        // $args = [
-        //     "label" => "Example",
-        //     "labels" => $labels,
-        //     "public" => true,
-        //     "publicly_queryable" => true,
-        //     "hierarchical" => false,
-        //     "show_ui" => true,
-        //     "show_in_menu" => true,
-        //     "show_in_nav_menus" => true,
-        //     "query_var" => true,
-        //     "rewrite" => ['slug' => 'example', 'with_front' => true,],
-        //     "show_admin_column" => false,
-        //     "show_in_rest" => true,
-        //     "rest_base" => "example",
-        //     "rest_controller_class" => "WP_REST_Terms_Controller",
-        //     "show_in_quick_edit" => false,
-        // ];
-
-        // register_taxonomy("example", ["posttype"], $args);
-    }
-
-    public function block_categories_all($categories) {
         return array_merge([['slug' => 'custom', 'title' => __('Custom')]], $categories);
     }
 
-    public function acf_register_blocks() {
+    public function acf_register_blocks()
+    {
         $blocks = [];
-        
+
         foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
             if ($dir->isDot()) continue;
 
@@ -159,10 +99,10 @@ class Timberland extends Site
                 $blocks[] = $dir->getPathname();
             }
         }
-        
+
         asort($blocks);
-       
-        foreach($blocks as $block) {
+
+        foreach ($blocks as $block) {
             register_block_type($block);
         }
     }
@@ -173,11 +113,12 @@ class Timberland extends Site
     //     $context['block'] = ['id' => uniqid()];
     //     $context['fields'] = get_fields();
     //     $template = $attributes['path'] . '/index.twig';
-    
+
     //     Timber::render($template, $context);
     // }
 
-    public function allowed_block_types() {
+    public function allowed_block_types()
+    {
         $allowed_blocks = [
             'core/columns'
         ];
@@ -189,7 +130,8 @@ class Timberland extends Site
         return $allowed_blocks;
     }
 
-    public function enqueue_block_editor_assets() {
+    public function enqueue_block_editor_assets()
+    {
         //wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
         wp_enqueue_script('app', get_template_directory_uri() . '/assets/build/app.js');
     }
@@ -198,8 +140,8 @@ class Timberland extends Site
     {
         static $manifest;
 
-        if (! $manifest) {
-            if (! file_exists($manifestPath = $manifestDirectory.'/mix-manifest.json')) {
+        if (!$manifest) {
+            if (!file_exists($manifestPath = $manifestDirectory . '/mix-manifest.json')) {
                 throw new Exception('The Mix manifest does not exist.');
             }
             $manifest = json_decode(file_get_contents($manifestPath), true);
@@ -209,7 +151,7 @@ class Timberland extends Site
             $path = "/{$path}";
         }
 
-        if (! array_key_exists($path, $manifest)) {
+        if (!array_key_exists($path, $manifest)) {
             throw new Exception(
                 "Unable to locate Mix file: {$path}. Please check your webpack.mix.js output paths and try again."
             );
@@ -231,7 +173,12 @@ function acf_block_render_callback($block, $content) {
     Timber::render($template, $context);
 }
 
-// Require block functions files
-foreach (glob(dirname(__FILE__) . "/blocks/*/functions.php") as $file) {
-    require_once $file;
+// Remove ACF block wrapper div
+function acf_should_wrap_innerblocks($wrap, $name) {
+	// if ( $name == 'acf/test-block' ) {
+	// 	return true;
+	// }
+	return false;
 }
+
+add_filter('acf/blocks/wrap_frontend_innerblocks', 'acf_should_wrap_innerblocks', 10, 2);

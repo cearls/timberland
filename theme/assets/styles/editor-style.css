@@ -9,21 +9,21 @@ body {
 }
 
 .wp-block{
-    @apply max-w-screen-xl my-8;
-}
-
-.wp-block[data-align=wide] {
     @apply max-w-screen-xl;
 }
 
-.wp-block[data-align=full] {
-    @apply max-w-full;
+.wp-block-post-content {
+    @apply max-w-screen-xl mx-auto my-6;
 }
 
 .mce-content-body, .acf_content, .mceContentBody {
-	@apply prose max-w-none;
+	@apply prose prose-lg max-w-none;
 }
 
 h1.wp-block-post-title {
     @apply text-4xl font-bold;
+}
+
+.acf-innerblocks-container {
+    @apply w-full;
 }
