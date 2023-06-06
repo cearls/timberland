@@ -40,17 +40,18 @@ If you're developing locally and moving files to your production environment, on
 
 ## Blocks
 
-A block is a self-contained page section and includes its own template, script, style and functions files.
+A block is a self-contained page section and includes its own template, script, style, functions and block.json files.
 
 ```
   example/
+  ├── block.json
+  ├── functions.php 
   ├── index.twig
-  ├── functions.php
   ├── script.js
   ├── style.css
 ```
 
-To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and optional style.css, script.js and functions.php files and it's ready to be used with the WordPress block editor. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
+To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and `block.json` files and it's ready to be used with the WordPress block editor. You can optionally add style.css, script.js and functions.php files. An example block is provided for reference. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
 
 ### Accessing Fields
 
@@ -75,6 +76,8 @@ Here's an example of how to loop through a repeater field where "features" is th
 `theme/assets/` contain all of your fonts, images, styles and scripts.
 
 `theme/blocks/` contain all of your site's blocks. These blocks are available to use on any page via the block editor. Each block has its own template, script and style files.
+
+`theme/patterns/ ` contains all of your sites's block patterns. Block Patterns are a collection of predefined blocks that you can insert into pages and posts and then customize with your own content. 
 
 `theme/views/` contains all of your Twig templates. These pretty much correspond 1 to 1 with the PHP files that respond to the WordPress template hierarchy. At the end of each PHP template, you'll notice a `Timber::render()` function whose first parameter is the Twig file where that data (or `$context`) will be used.
 
