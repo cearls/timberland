@@ -82,4 +82,5 @@ Here's an example of how to loop through a repeater field where "features" is th
 `theme/views/` contains all of your Twig templates. These pretty much correspond 1 to 1 with the PHP files that respond to the WordPress template hierarchy. At the end of each PHP template, you'll notice a `Timber::render()` function whose first parameter is the Twig file where that data (or `$context`) will be used.
 
 ## License
+
 MIT © Chris Earls

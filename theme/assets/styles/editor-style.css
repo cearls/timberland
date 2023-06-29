@@ -17,7 +17,7 @@ body {
 }
 
 .mce-content-body, .acf_content, .mceContentBody {
-	@apply prose prose-lg max-w-none;
+  @apply prose prose-lg max-w-none;
 }
 
 h1.wp-block-post-title {
