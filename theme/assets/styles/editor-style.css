@@ -5,15 +5,15 @@
 @import "tailwindcss/utilities";
 
 body {
-    @apply font-sans;
+  @apply font-sans;
 }
 
 .wp-block{
-    @apply max-w-screen-xl;
+  @apply max-w-screen-xl;
 }
 
 .wp-block-post-content {
-    @apply max-w-screen-xl mx-auto my-6;
+  @apply max-w-screen-xl mx-auto my-6;
 }
 
 .mce-content-body, .acf_content, .mceContentBody {
@@ -21,9 +21,9 @@ body {
 }
 
 h1.wp-block-post-title {
-    @apply text-4xl font-bold;
+  @apply text-4xl font-bold;
 }
 
 .acf-innerblocks-container {
-    @apply w-full;
+  @apply w-full;
 }
