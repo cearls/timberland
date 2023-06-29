@@ -11,7 +11,7 @@ use Timber\Timber;
 
 $context = Timber::context();
 
-switch ($wp_query) {
+switch (true) {
     case is_day():
         $context['title'] = 'Archive: ' . get_the_date('D M Y');
         break;
