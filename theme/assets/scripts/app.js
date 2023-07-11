@@ -2,7 +2,7 @@ import Alpine from 'alpinejs'
 
 window.Alpine = Alpine
 
-// Import js for componenents
+// Import js for components
 function importAll(r) {
   r.keys().forEach(r)
 }
