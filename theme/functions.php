@@ -175,10 +175,10 @@ function acf_block_render_callback($block, $content) {
 
 // Remove ACF block wrapper div
 function acf_should_wrap_innerblocks($wrap, $name) {
-	// if ( $name == 'acf/test-block' ) {
-	// 	return true;
-	// }
-	return false;
+    // if ( $name == 'acf/test-block' ) {
+    //     return true;
+    // }
+    return false;
 }
 
 add_filter('acf/blocks/wrap_frontend_innerblocks', 'acf_should_wrap_innerblocks', 10, 2);

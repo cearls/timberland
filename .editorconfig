@@ -7,6 +7,9 @@ indent_style = space
 indent_size = 2
 trim_trailing_whitespace = true
 insert_final_newline = true
+block_comment_start = /*
+block_comment = *
+block_comment_end = */
 
 [*.php]
 indent_size = 4
