@@ -1,7 +1,7 @@
 {
   "name": "cearls/timberland",
   "type": "wordpress-theme",
-  "description": "A modern Wordpress theme using Timber, ACF, Tailwind CSS and Alpine JS",
+  "description": "A modern WordPress theme using Timber, ACF, Tailwind CSS and Alpine JS",
   "license": "MIT",
   "authors": [{
     "name": "Chris Earls",
