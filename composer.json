@@ -5,10 +5,10 @@
   "license": "MIT",
   "authors": [{
     "name": "Chris Earls",
-    "email": "cgearls@github.com"
+    "email": "cgearls@gmail.com"
   }],
   "require": {
-    "timber/timber": "^1.20.0"
+    "timber/timber": "^2.0"
   },
   "config": {
     "optimize-autoloader": true,

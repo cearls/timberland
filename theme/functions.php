@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @package WordPress
  * @subpackage Timberland
@@ -8,16 +7,11 @@
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
 
-use Timber\Menu;
-use Timber\Post;
-use Timber\Site;
-use Timber\Timber;
+Timber\Timber::init();
+Timber::$dirname = [ 'views', 'blocks' ];
+Timber::$autoescape = false;
 
-$timber = new Timber();
-
-Timber::$dirname = array('views', 'blocks');
-
-class Timberland extends Site
+class Timberland extends Timber\Site
 {
     public function __construct()
     {
@@ -36,7 +30,7 @@ class Timberland extends Site
     public function add_to_context($context)
     {
         $context['site'] = $this;
-        $context['menu'] = new Menu();
+        $context['menu'] = Timber::get_menu();
 
         // Require block functions files
         foreach (glob(dirname(__FILE__) . "/blocks/*/functions.php") as $file) {
@@ -107,16 +101,6 @@ class Timberland extends Site
         }
     }
 
-    // public function acf_block_render_callback($attributes, $content) {
-    //     $context = Timber::context();
-    //     $context['post'] = new Post();
-    //     $context['block'] = ['id' => uniqid()];
-    //     $context['fields'] = get_fields();
-    //     $template = $attributes['path'] . '/index.twig';
-
-    //     Timber::render($template, $context);
-    // }
-
     public function allowed_block_types()
     {
         $allowed_blocks = [
@@ -165,7 +149,7 @@ new Timberland();
 
 function acf_block_render_callback($block, $content) {
     $context = Timber::context();
-    $context['post'] = new Post();
+    $context['post'] = Timber::get_post();
     $context['block'] = $block;
     $context['fields'] = get_fields();
     $template = $block['path'] . '/index.twig';
