@@ -1,5 +1,8 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
-@import-glob "../../blocks/**/*.css";
 @import "theme";
 @import "tailwindcss/utilities";
+
+body.admin-bar {
+    max-height: calc(100vh - 32px);
+}

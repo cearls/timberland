@@ -2,6 +2,4 @@
 /vendor/
 *.log
 .DS_Store
-/theme/assets/build/
-mix-manifest.json
-browsersync.config.js
+/theme/dist/
