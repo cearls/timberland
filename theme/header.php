@@ -8,7 +8,7 @@
  *
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 1.2.0
+ * @since Timberland 2.0.0
  */
 
 $GLOBALS['timberContext'] = Timber::context();

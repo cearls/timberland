@@ -2,7 +2,7 @@
 /**
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 1.2.0
+ * @since Timberland 2.0.0
  */
 
 require_once dirname(__DIR__) . '/vendor/autoload.php';
@@ -15,14 +15,14 @@ class Timberland extends Timber\Site
 {
     public function __construct()
     {
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+        add_action('wp_enqueue_scripts', [$this, 'enqueue_assets']);
         add_action('after_setup_theme', [$this, 'theme_supports']);
         add_filter('timber/context', [$this, 'add_to_context']);
         add_filter('timber/twig', [$this, 'add_to_twig']);
         add_action('block_categories_all', [$this, 'block_categories_all']);
         add_action('acf/init', [$this, 'acf_register_blocks']);
         //add_filter('allowed_block_types', [$this, 'allowed_block_types']);
-        add_action('enqueue_block_editor_assets', [$this, 'enqueue_block_editor_assets']);
+        add_action('enqueue_block_editor_assets', [$this, 'enqueue_assets']);
 
         parent::__construct();
     }
@@ -61,41 +61,43 @@ class Timberland extends Timber\Site
         add_theme_support('post-thumbnails');
         add_theme_support('title-tag');
         add_theme_support('editor-styles');
-        add_editor_style('assets/build/editor-style.css');
     }
 
-    public function enqueue_scripts()
+    public function enqueue_assets()
     {
         wp_dequeue_style('wp-block-library');
         wp_dequeue_style('wp-block-library-theme');
         wp_dequeue_style('wc-block-style');
         wp_dequeue_script('jquery');
 
-        // Enqueue Vite assets
-        $distUri = get_template_directory_uri() . '/dist';
-        $distPath = get_template_directory() . '/dist';
-        // Set WP_ENVIRONMENT_TYPE to 'local' in wp-config.php to enable development mode
-        $env = wp_get_environment_type();
+        $config = json_decode(file_get_contents(get_template_directory() . '/../config.json'), true);
+        $env = $config['environment'] ?? 'production';
 
         if ($env === 'local') {
             function vite_head_module_hook() {
                 echo '<script type="module" crossorigin src="http://localhost:3000/theme/assets/main.js"></script>';
             }
-            add_action('wp_head', 'vite_head_module_hook');     
+            add_action('wp_head', 'vite_head_module_hook');
         }
         else {
-            $manifest = json_decode( file_get_contents( $distPath . '/manifest.json'), true );
+            $distUri = get_template_directory_uri() . '/assets/dist';
+            $distPath = get_template_directory() . '/assets/dist';
+            $manifest = json_decode(file_get_contents( $distPath . '/manifest.json'), true);
 
             if (is_array($manifest)) {
                 $css_file = 'theme/assets/main.css';
-                if (isset($manifest[$css_file])) {
+                $editor_css_file = 'theme/assets/styles/editor-style.css';
+
+                if (is_admin()) {
+                    //wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+                    add_editor_style( $distUri . '/' . $manifest[$editor_css_file]['file'] );
+                }
+                else {
                     wp_enqueue_style( 'main', $distUri . '/' . $manifest[$css_file]['file'] );
                 }
 
                 $js_file = 'theme/assets/main.js';
-                if (isset($manifest[$js_file])) {
-                    wp_enqueue_script( 'main', $distUri . '/' . $manifest[$js_file]['file'], [], '', true );
-                }
+                wp_enqueue_script( 'main', $distUri . '/' . $manifest[$js_file]['file'], [], '', array('strategy' => 'defer', 'in_footer' => true) );
             }
         }
     }
@@ -135,12 +137,6 @@ class Timberland extends Timber\Site
         }
 
         return $allowed_blocks;
-    }
-
-    public function enqueue_block_editor_assets()
-    {
-        //wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
-        //wp_enqueue_script('app', get_template_directory_uri() . '/assets/build/app.js');
     }
 }
 
