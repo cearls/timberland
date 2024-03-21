@@ -70,8 +70,11 @@ class Timberland extends Timber\Site
         wp_dequeue_style('wc-block-style');
         wp_dequeue_script('jquery');
 
-        $config = json_decode(file_get_contents(get_template_directory() . '/../config.json'), true);
-        $env = $config['environment'] ?? 'production';
+        $env = 'production';
+        if (!file_exists(get_template_directory() . '/../config.json')) {
+            $config = json_decode(file_get_contents(get_template_directory() . '/../config.json'), true);
+            $env = $config['environment'] ?? 'production';
+        }
 
         if ($env === 'local') {
             function vite_head_module_hook() {
