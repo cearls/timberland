@@ -71,7 +71,7 @@ class Timberland extends Timber\Site
         wp_dequeue_script('jquery');
 
         $env = 'production';
-        if (!file_exists(get_template_directory() . '/../config.json')) {
+        if (file_exists(get_template_directory() . '/../config.json')) {
             $config = json_decode(file_get_contents(get_template_directory() . '/../config.json'), true);
             $env = $config['environment'] ?? 'production';
         }

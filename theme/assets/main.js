@@ -4,6 +4,6 @@ import Alpine from 'alpinejs'
 
 window.Alpine = Alpine
 
-import.meta.globEager('../blocks/**/*.js')
+import.meta.glob('../blocks/**/*.js', { eager: true })
 
 window.Alpine.start()
