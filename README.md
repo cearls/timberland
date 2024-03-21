@@ -1,6 +1,6 @@
 # Timberland :evergreen_tree:
 
-Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Laravel Mix](https://github.com/JeffreyWay/laravel-mix), [Tailwind](https://tailwindcss.com/) and [Alpine.js](https://github.com/alpinejs/alpine).
+Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Vite](https://vitejs.dev/), [Tailwind](https://tailwindcss.com/) and [Alpine.js](https://github.com/alpinejs/alpine).
 
 As of version 1.0, Timberland now uses the WordPress block editor to visually edit the site. This is made possible by the [ACF Blocks feature](https://www.advancedcustomfields.com/resources/blocks/).
 
@@ -14,21 +14,21 @@ As of version 1.0, Timberland now uses the WordPress block editor to visually ed
 
 ## Development
 
-Timberland builds your css and js files using Laravel Mix. This allows you to use the latest Javascript and CSS features.
+Timberland builds your css and js files using Vite. This allows you to use the latest Javascript and CSS features.
 
-To build your assets for development, run `npm run development` or `npm run watch` from the theme directory in the terminal.
+To build your assets for development, run `npm run dev` from the theme directory in the terminal.
 
-### Browsersync
+### Live Reload
 
-To use Browsersync during local development, rename `browsersync.config-sample.js` to `browsersync.config.js` and update the proxy to match your local development URL. Other options can be seen in the [Browsersync documentation](https://browsersync.io/docs/options/).
+To use Live Reload during local development, rename `config-sample.json` to `config.json`. The environment property should be set to "local".
 
 ### Versioning
 
-To assist with long-term caching, file hashing (e.g. `app.js?id=8e5c48eadbfdd5458ec6`) is enabled by default. This is useful for cache-busting purposes.
+To assist with long-term caching, file hashing (e.g. `main-e1457bfd.js`) is enabled by default. This is useful for cache-busting purposes.
 
 ## Production
 
-When you're ready for production, run `npm run production` from the theme directory in the terminal.
+When you're ready for production, run `npm run build` from the theme directory in the terminal.
 
 If you're developing locally and moving files to your production environment, only the `theme` and `vendor` directories are needed inside the `timberland` theme directory. The theme directory structure should look like the following:
 
