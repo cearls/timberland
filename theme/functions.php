@@ -83,9 +83,9 @@ class Timberland extends Timber\Site
             add_action('wp_head', 'vite_head_module_hook');
         }
         else {
-            $distUri = get_template_directory_uri() . '/assets/dist';
-            $distPath = get_template_directory() . '/assets/dist';
-            $manifest = json_decode(file_get_contents( $distPath . '/manifest.json'), true);
+            $dist_uri = get_template_directory_uri() . '/assets/dist';
+            $dist_path = get_template_directory() . '/assets/dist';
+            $manifest = json_decode(file_get_contents( $dist_path . '/manifest.json'), true);
 
             if (is_array($manifest)) {
                 $css_file = 'theme/assets/main.css';
@@ -93,14 +93,14 @@ class Timberland extends Timber\Site
 
                 if (is_admin()) {
                     //wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
-                    add_editor_style( $distUri . '/' . $manifest[$editor_css_file]['file'] );
+                    add_editor_style( $dist_uri . '/' . $manifest[$editor_css_file]['file'] );
                 }
                 else {
-                    wp_enqueue_style( 'main', $distUri . '/' . $manifest[$css_file]['file'] );
+                    wp_enqueue_style( 'main', $dist_uri . '/' . $manifest[$css_file]['file'] );
                 }
 
                 $js_file = 'theme/assets/main.js';
-                wp_enqueue_script( 'main', $distUri . '/' . $manifest[$js_file]['file'], [], '', array('strategy' => 'defer', 'in_footer' => true) );
+                wp_enqueue_script( 'main', $dist_uri . '/' . $manifest[$js_file]['file'], [], '', array('strategy' => 'defer', 'in_footer' => true) );
             }
         }
     }
@@ -114,10 +114,10 @@ class Timberland extends Timber\Site
     {
         $blocks = [];
 
-        foreach (new DirectoryIterator(dirname(__FILE__) . '/blocks') as $dir) {
+        foreach (new DirectoryIterator(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'blocks') as $dir) {
             if ($dir->isDot()) continue;
 
-            if (file_exists($dir->getPathname() . '/block.json')) {
+            if (file_exists($dir->getPathname() . DIRECTORY_SEPARATOR . 'block.json')) {
                 $blocks[] = $dir->getPathname();
             }
         }
@@ -128,6 +128,7 @@ class Timberland extends Timber\Site
             register_block_type($block);
         }
     }
+
 
     public function allowed_block_types()
     {
