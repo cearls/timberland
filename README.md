@@ -20,7 +20,7 @@ To build your assets for development, run `npm run dev` from the theme directory
 
 ### Live Reload
 
-To use live reload during local development, rename `config-sample.json` to `config.json`. The environment property should be set to "local".
+To use live reload during development, rename `config-sample.json` to `config.json`. The environment property should be set to "development". Set it to "production" to disable live reload.
 
 ### Versioning
 

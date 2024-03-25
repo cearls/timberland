@@ -76,7 +76,7 @@ class Timberland extends Timber\Site
             $env = $config['environment'] ?? 'production';
         }
 
-        if ($env === 'local') {
+        if ($env === 'development') {
             function vite_head_module_hook() {
                 echo '<script type="module" crossorigin src="http://localhost:3000/theme/assets/main.js"></script>';
             }
