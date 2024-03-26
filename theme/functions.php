@@ -123,12 +123,12 @@ class Timberland extends Timber\Site {
 	public function acf_register_blocks() {
 		$blocks = array();
 
-		foreach ( new DirectoryIterator( __DIR__ . DIRECTORY_SEPARATOR . 'blocks' ) as $dir ) {
+		foreach ( new DirectoryIterator( __DIR__ . '/blocks' ) as $dir ) {
 			if ( $dir->isDot() ) {
 				continue;
 			}
 
-			if ( file_exists( $dir->getPathname() . DIRECTORY_SEPARATOR . 'block.json' ) ) {
+			if ( file_exists( $dir->getPathname() . '/block.json' ) ) {
 				$blocks[] = $dir->getPathname();
 			}
 		}
