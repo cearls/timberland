@@ -64,6 +64,7 @@ class Timberland extends Timber\Site {
 		wp_dequeue_script( 'jquery' );
 
 		$vite_env = 'production';
+
 		if ( file_exists( get_template_directory() . '/../config.json' ) ) {
 			$config   = json_decode( file_get_contents( get_template_directory() . '/../config.json' ), true );
 			$vite_env = $config['vite']['environment'] ?? 'production';
@@ -72,6 +73,7 @@ class Timberland extends Timber\Site {
 		$dist_uri  = get_template_directory_uri() . '/assets/dist';
 		$dist_path = get_template_directory() . '/assets/dist';
 		$manifest  = null;
+		
 		if ( file_exists( $dist_path . '/.vite/manifest.json' ) ) {
 			$manifest = json_decode( file_get_contents( $dist_path . '/.vite/manifest.json' ), true );
 		}
