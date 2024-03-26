@@ -16,11 +16,13 @@ As of version 1.0, Timberland now uses the WordPress block editor to visually ed
 
 Timberland builds your css and js files using Vite. This allows you to use the latest Javascript and CSS features.
 
-To build your assets for development, run `npm run dev` from the theme directory in the terminal.
+To get started:
+1. Run `npm run build` to generate assets that can be used in the admin block editor. This only needs to be run as often as you want to see updated block previews in the admin.
+2. Run `npm run dev` to start the Vite dev server.
 
 ### Live Reload
 
-To use live reload during development, rename `config-sample.json` to `config.json`. The environment property should be set to "development". Set it to "production" to disable live reload.
+Live reload is enabled by default.
 
 ### Versioning
 
@@ -28,7 +30,7 @@ To assist with long-term caching, file hashing (e.g. `main-e1457bfd.js`) is enab
 
 ## Production
 
-When you're ready for production, run `npm run build` from the theme directory in the terminal.
+When you're ready for production, run `npm run build` from the theme directory. You can test production assets in development by setting the vite → environment property to "production" in config.json.
 
 If you're developing locally and moving files to your production environment, only the `theme` and `vendor` directories are needed inside the `timberland` theme directory. The theme directory structure should look like the following:
 

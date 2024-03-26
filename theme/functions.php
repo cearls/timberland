@@ -70,38 +70,37 @@ class Timberland extends Timber\Site
         wp_dequeue_style('wc-block-style');
         wp_dequeue_script('jquery');
 
-        $env = 'production';
+        $vite_env = 'production';
         if (file_exists(get_template_directory() . '/../config.json')) {
             $config = json_decode(file_get_contents(get_template_directory() . '/../config.json'), true);
-            $env = $config['environment'] ?? 'production';
+            $vite_env = $config['vite']['environment'] ?? 'production';
         }
 
-        if ($env === 'development') {
+        $dist_uri = get_template_directory_uri() . '/assets/dist';
+        $dist_path = get_template_directory() . '/assets/dist';
+        $manifest = null;
+        if (file_exists($dist_path . '/.vite/manifest.json')) {
+            $manifest = json_decode(file_get_contents( $dist_path . '/.vite/manifest.json'), true);
+        }
+
+        if (is_array($manifest)) {
+            if ($vite_env == 'production' || is_admin()) {
+                $js_file = 'theme/assets/main.js';
+                wp_enqueue_style( 'main', $dist_uri . '/' . $manifest[$js_file]['css'][0] );
+                wp_enqueue_script( 'main', $dist_uri . '/' . $manifest[$js_file]['file'], [], '', array('strategy' => 'defer', 'in_footer' => true) );
+
+                //wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+                $editor_css_file = 'theme/assets/styles/editor-style.css';
+                add_editor_style( $dist_uri . '/' . $manifest[$editor_css_file]['file'] );
+            }
+        }
+
+        if ($vite_env == 'development') {
             function vite_head_module_hook() {
+                echo '<script type="module" crossorigin src="http://localhost:3000/@vite/client"></script>';
                 echo '<script type="module" crossorigin src="http://localhost:3000/theme/assets/main.js"></script>';
             }
             add_action('wp_head', 'vite_head_module_hook');
-        }
-        else {
-            $dist_uri = get_template_directory_uri() . '/assets/dist';
-            $dist_path = get_template_directory() . '/assets/dist';
-            $manifest = json_decode(file_get_contents( $dist_path . '/manifest.json'), true);
-
-            if (is_array($manifest)) {
-                $css_file = 'theme/assets/main.css';
-                $editor_css_file = 'theme/assets/styles/editor-style.css';
-
-                if (is_admin()) {
-                    //wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
-                    add_editor_style( $dist_uri . '/' . $manifest[$editor_css_file]['file'] );
-                }
-                else {
-                    wp_enqueue_style( 'main', $dist_uri . '/' . $manifest[$css_file]['file'] );
-                }
-
-                $js_file = 'theme/assets/main.js';
-                wp_enqueue_script( 'main', $dist_uri . '/' . $manifest[$js_file]['file'], [], '', array('strategy' => 'defer', 'in_footer' => true) );
-            }
         }
     }
 
