@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   content: [
     './theme/views/**/*.twig',
     './theme/blocks/**/*.twig',
