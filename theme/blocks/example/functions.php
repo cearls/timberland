@@ -1,2 +1,2 @@
 <?php
-//$context['example'] = 'Hello from the example block!';
+// $context['example'] = 'Hello from the example block!';
