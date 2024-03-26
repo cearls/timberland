@@ -5,11 +5,6 @@ const entries = [
   './theme/assets/main.js',
   './theme/assets/styles/editor-style.css',
 ]
-const watchFiles = [
-  './theme/*.php',
-  './theme/views/**/*',
-  './theme/blocks/**/*.{php,twig}'
-]
 
 export default defineConfig(({ mode }) => {
   return {
