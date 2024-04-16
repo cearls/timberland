@@ -10,7 +10,7 @@
  *
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 2.0.0
+ * @since Timberland 2.0.1
  */
 
 $context   = Timber::context();
