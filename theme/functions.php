@@ -73,7 +73,7 @@ class Timberland extends Timber\Site {
 		$dist_uri  = get_template_directory_uri() . '/assets/dist';
 		$dist_path = get_template_directory() . '/assets/dist';
 		$manifest  = null;
-		
+
 		if ( file_exists( $dist_path . '/.vite/manifest.json' ) ) {
 			$manifest = json_decode( file_get_contents( $dist_path . '/.vite/manifest.json' ), true );
 		}
@@ -148,7 +148,7 @@ function acf_block_render_callback( $block, $content ) {
 	$context['post']   = Timber::get_post();
 	$context['block']  = $block;
 	$context['fields'] = get_fields();
-	$template          = $block['path'] . '/index.twig';
+	$template = 'blocks/'. explode( '/', $block['name'] )[1] . '/index.twig';
 
 	Timber::render( $template, $context );
 }
