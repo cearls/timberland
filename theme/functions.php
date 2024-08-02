@@ -149,8 +149,8 @@ function acf_block_render_callback( $block, $content ) {
 	$context['post']   = Timber::get_post();
 	$context['block']  = $block;
 	$context['fields'] = get_fields();
-    $block_name = explode( '/', $block['name'] )[1];
-    $template = 'blocks/'. $block_name . '/index.twig';
+    $block_name        = explode( '/', $block['name'] )[1];
+    $template          = 'blocks/'. $block_name . '/index.twig';
 
 	Timber::render( $template, $context );
 }
