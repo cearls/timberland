@@ -2,7 +2,7 @@
 /**
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 2.0.1
+ * @since Timberland 2.1.0
  */
 
 Timber::render( array( 'sidebar.twig' ), $data );
