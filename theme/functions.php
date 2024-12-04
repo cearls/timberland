@@ -19,8 +19,8 @@ class Timberland extends Timber\Site {
 		add_filter( 'timber/twig', array( $this, 'add_to_twig' ) );
 		add_action( 'block_categories_all', array( $this, 'block_categories_all' ) );
 		add_action( 'acf/init', array( $this, 'acf_register_blocks' ) );
-		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_assets' ) );
-		add_action( 'admin_init', array( $this, 'admin_init' ) );
+		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_block_editor_assets' ) );
+		add_action( 'admin_head', array( $this, 'admin_head' ) );
 
 		parent::__construct();
 	}
@@ -130,7 +130,7 @@ class Timberland extends Timber\Site {
 		}
 	}
 
-	function admin_init() {
+	public function enqueue_block_editor_assets() {
 		$dist_dir = get_template_directory() . '/assets/dist/';
 		$dist_uri = get_template_directory_uri() . '/assets/dist/';
 
@@ -151,6 +151,18 @@ class Timberland extends Timber\Site {
 					error_log( 'No editor-style.css file found in the build directory.' );
 				}
 			}
+		}
+	}
+
+	public function admin_head() {
+		if (is_admin()) {
+			$template_directory = get_template_directory_uri();
+			echo <<<HTML
+			<script type="module">
+			import { Island } from "{$template_directory}/assets/javascript/is-land.js";
+			import "{$template_directory}/assets/javascript/is-land-autoinit.js";
+			</script>
+			HTML;
 		}
 	}
 }
