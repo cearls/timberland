@@ -20,6 +20,7 @@ class Timberland extends Timber\Site {
 		add_action( 'block_categories_all', array( $this, 'block_categories_all' ) );
 		add_action( 'acf/init', array( $this, 'acf_register_blocks' ) );
 		add_action( 'enqueue_block_editor_assets', array( $this, 'enqueue_assets' ) );
+		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
 		parent::__construct();
 	}
@@ -64,48 +65,36 @@ class Timberland extends Timber\Site {
 		wp_dequeue_script( 'jquery' );
 		wp_dequeue_style( 'global-styles' );
 
-		$vite_env = 'production';
+		$dev_css_file = get_template_directory() . '/assets/dist/main.css';
+		$dist_dir = get_template_directory() . '/assets/dist/';
+		$dist_uri = get_template_directory_uri() . '/assets/dist/';
 
-		if ( file_exists( get_template_directory() . '/../config.json' ) ) {
-			$config   = json_decode( file_get_contents( get_template_directory() . '/../config.json' ), true );
-			$vite_env = $config['vite']['environment'] ?? 'production';
-		}
+		if ( file_exists( $dev_css_file ) ) {
+			// Development: Enqueue the non-hashed CSS file.
+			wp_enqueue_style(
+				'theme-styles',
+				$dist_uri . 'main.css',
+				array(),
+				filemtime( $dev_css_file )
+			);
+		} else {
+			// Production: Enqueue the hashed CSS file.
+			$css_files = glob( $dist_dir . 'main.*.css' );
 
-		$dist_uri  = get_template_directory_uri() . '/assets/dist';
-		$dist_path = get_template_directory() . '/assets/dist';
-		$manifest  = null;
-
-		if ( file_exists( $dist_path . '/.vite/manifest.json' ) ) {
-			$manifest = json_decode( file_get_contents( $dist_path . '/.vite/manifest.json' ), true );
-		}
-
-		if ( is_array( $manifest ) ) {
-			if ( $vite_env === 'production' || is_admin() ) {
-				$js_file = 'theme/assets/main.js';
-				wp_enqueue_style( 'main', $dist_uri . '/' . $manifest[ $js_file ]['css'][0] );
-				wp_enqueue_script(
-					'main',
-					$dist_uri . '/' . $manifest[ $js_file ]['file'],
+			if ( ! empty( $css_files ) ) {
+				$hashed_css_file = basename( $css_files[0] ); // Use the first matched file.
+				wp_enqueue_style(
+					'theme-styles',
+					$dist_uri . $hashed_css_file,
 					array(),
-					'',
-					array(
-						'strategy'  => 'defer',
-						'in_footer' => true,
-					)
+					null
 				);
-
-				// wp_enqueue_style('prefix-editor-font', '//fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
-				$editor_css_file = 'theme/assets/styles/editor-style.css';
-				add_editor_style( $dist_uri . '/' . $manifest[ $editor_css_file ]['file'] );
+			} else {
+				// Fallback: Log error if no CSS file is found.
+				if ( WP_DEBUG ) {
+					error_log( 'No CSS file found in the production build.' );
+				}
 			}
-		}
-
-		if ( $vite_env === 'development' ) {
-			function vite_head_module_hook() {
-				echo '<script type="module" crossorigin src="http://localhost:3000/@vite/client"></script>';
-				echo '<script type="module" crossorigin src="http://localhost:3000/theme/assets/main.js"></script>';
-			}
-			add_action( 'wp_head', 'vite_head_module_hook' );
 		}
 	}
 
@@ -138,6 +127,30 @@ class Timberland extends Timber\Site {
 
 		foreach ( $blocks as $block ) {
 			register_block_type( $block );
+		}
+	}
+
+	function admin_init() {
+		$dist_dir = get_template_directory() . '/assets/dist/';
+		$dist_uri = get_template_directory_uri() . '/assets/dist/';
+
+		// Check for hashed editor-style.css in production
+		$css_files = glob( $dist_dir . 'editor-style.*.css' );
+
+		if ( ! empty( $css_files ) ) {
+			// Use the hashed file in production
+			$hashed_css_file = basename( $css_files[0] );
+			add_editor_style( $dist_uri . $hashed_css_file );
+		} else {
+			// Fallback to plain editor-style.css in development
+			if ( file_exists( $dist_dir . 'editor-style.css' ) ) {
+				add_editor_style( $dist_uri . 'editor-style.css' );
+			} else {
+				// Log an error if no CSS file is found
+				if ( WP_DEBUG ) {
+					error_log( 'No editor-style.css file found in the build directory.' );
+				}
+			}
 		}
 	}
 }

@@ -1,7 +1,7 @@
-export default {
+module.exports = {
   content: [
-    './theme/views/**/*.twig',
-    './theme/blocks/**/*.twig',
+    "./theme/views/**/*.twig",
+    "./theme/blocks/**/*.twig"
   ],
   theme: {
     extend: {},

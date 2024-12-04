@@ -1,23 +1,15 @@
 {
-  "apiVersion": 2,
   "name": "acf/example",
   "title": "Example",
   "description": "",
   "category": "custom",
+  "style": [ "file:./style.css" ],
+  "script": [ "file:./script.js" ],
   "acf": {
-    "mode": "preview",
-    "renderCallback": "acf_block_render_callback"
+      "mode": "preview",
+      "renderCallback": "acf_block_render_callback"
   },
   "supports": {
-    "align": false,
     "jsx": false
-  },
-  "example": {
-    "attributes": {
-      "mode": "preview",
-      "data": {
-        "is_preview": true
-      }
-    }
   }
 }

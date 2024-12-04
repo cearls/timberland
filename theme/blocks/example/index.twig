@@ -1,5 +1,9 @@
-<div class="flex items-center h-screen bg-emerald-700 example">
-    <div class="max-w-5xl m-auto bg-white rounded-lg w-3/4 h-64 flex items-center shadow-xl" x-data="{ showPhrase: true }">
-        <h1 class="w-full text-center text-3xl md:text-5xl font-mono" @mouseover="showPhrase = false" @mouseout="showPhrase = true" x-text="showPhrase ? 'Timberland' : 'Timber &amp; ACF &amp; Tailwind &amp; Alpine'"></h1>
-    </div>
-</div>
+<is-land on:visible import="https://unpkg.com/alpinejs">
+    <template data-island>
+        <div class="flex items-center h-screen bg-emerald-700 example">
+            <div class="max-w-5xl m-auto bg-white rounded-lg w-3/4 h-64 flex items-center shadow-xl" x-data="{ showPhrase: true }">
+                <h1 class="w-full text-center text-3xl md:text-5xl font-mono" @mouseover="showPhrase = false" @mouseout="showPhrase = true" x-text="showPhrase ? 'Timberland' : 'Timber &amp; ACF &amp; Tailwind &amp; Alpine'"></h1>
+            </div>
+        </div>
+    </template>
+</is-land>
