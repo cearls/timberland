@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "@11ty/is-land": "^4.0.0",
+    "@builder.io/partytown": "^0.10.2",
     "@tailwindcss/typography": "^0.5.15",
     "browser-sync": "^3.0.3",
     "crypto": "^1.0.1",
