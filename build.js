@@ -2,6 +2,23 @@ const fs = require('fs');
 const crypto = require('crypto');
 const path = require('path');
 const { execSync } = require('child_process');
+const distDir = './theme/assets/dist';
+
+const cleanDist = (directory) => {
+  if (fs.existsSync(directory)) {
+    fs.readdirSync(directory).forEach((file) => {
+      const filePath = path.join(directory, file);
+      if (fs.statSync(filePath).isFile()) {
+        fs.unlinkSync(filePath);
+      }
+    });
+    console.log(`Cleaned up files in ${directory}`);
+  } else {
+    console.log(`Directory ${directory} does not exist. Skipping cleanup.`);
+  }
+};
+
+cleanDist(distDir);
 
 const styles = [
   { input: './theme/assets/styles/main.css', output: './theme/assets/dist/main.css' },
@@ -9,10 +26,8 @@ const styles = [
 ];
 
 styles.forEach(({ input, output }) => {
-  // Compile Tailwind CSS
   execSync(`npx tailwindcss -i ${input} -o ${output} --minify`, { stdio: 'inherit' });
 
-  // Generate hash for the CSS file
   const fileContents = fs.readFileSync(output);
   const hash = crypto.createHash('md5').update(fileContents).digest('hex').slice(0, 8);
 
