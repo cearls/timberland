@@ -1,6 +1,8 @@
 # Timberland :evergreen_tree:
 
-Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Vite](https://vitejs.dev/), [Tailwind](https://tailwindcss.com/) and [Alpine.js](https://github.com/alpinejs/alpine).
+Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Tailwind](https://tailwindcss.com/) and [&lt;is-land&gt;](https://github.com/11ty/is-land).
+
+[Alpine.js](https://github.com/alpinejs/alpine) is preconfigured and can be enabled if needed.
 
 As of version 1.0, Timberland now uses the WordPress block editor to visually edit the site. This is made possible by the [ACF Blocks feature](https://www.advancedcustomfields.com/resources/blocks/).
 
@@ -12,25 +14,25 @@ As of version 1.0, Timberland now uses the WordPress block editor to visually ed
 4. Activate the theme in Appearance > Themes.
 5. Make sure you have installed [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/)
 
+## Import Maps and Tailwind CLI
+
+Timberland now uses native JavaScript importmap to manage  JavaScript dependencies. This can be configured in `theme/views/base.twig`.
+
+Tailwind CLI is used to compile CSS.
+
+There is no frontend tooling beyond basic Javascript that is included in `dev.js` and `build.js`.
+
 ## Development
 
-Timberland builds your css and js files using Vite. This allows you to use the latest Javascript and CSS features.
-
-To get started:
-1. Run `npm run build` to generate assets that can be used in the admin block editor. This only needs to be run as often as you want to see updated block previews in the admin.
-2. Run `npm run dev` to start the Vite dev server.
+To get started, run `npm run dev` to start the development server.
 
 ### Live Reload
 
-Live reload is enabled by default.
-
-### Versioning
-
-To assist with long-term caching, file hashing (e.g. `main-e1457bfd.js`) is enabled by default. This is useful for cache-busting purposes.
+Live reload is enabled by default and your local development URL can be configured in `dev.js`.
 
 ## Production
 
-When you're ready for production, run `npm run build` from the theme directory. You can test production assets in development by setting the vite → environment property to "production" in config.json.
+For production, ensure that you have built the assets using `npm run build` and that all dependencies are correctly managed using the importmap.
 
 If you're developing locally and moving files to your production environment, only the `theme` and `vendor` directories are needed inside the `timberland` theme directory. The theme directory structure should look like the following:
 
@@ -40,20 +42,44 @@ If you're developing locally and moving files to your production environment, on
   ├── vendor/
 ```
 
+To assist with long-term caching, file hashing (e.g. `main-e1457bfd.js`) is enabled by default. This is useful for cache-busting purposes.
+
+## is-land.js and the Islands Architecture
+
+The theme uses `is-land.js` to implement the islands architecture. This approach allows for the progressive enhancement of specific parts of the page, improving performance and user experience.
+
+### What is Islands Architecture?
+
+Islands architecture is a design pattern where interactive components (islands) are isolated from the rest of the page. Each island can be independently hydrated and updated without affecting the rest of the page. This results in faster initial page loads and more efficient updates.
+
+### Using is-land.js
+
+`is-land.js` has been preconfigured and is ready to use in your views and blocks.
+
+Example:
+
+```html
+<is-land on:visible import="https://unpkg.com/alpinejs">
+    <template>
+        <div>
+            <!-- Your interactive component here -->
+        </div>
+    </template>
+</is-land>
+```
+
 ## Blocks
 
-A block is a self-contained page section and includes its own template, script, style, functions and block.json files.
+A block is a self-contained page section and includes its own template, functions and block.json files.
 
 ```
   example/
   ├── block.json
   ├── functions.php 
   ├── index.twig
-  ├── script.js
-  ├── style.css
 ```
 
-To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and `block.json` files and it's ready to be used with the WordPress block editor. You can optionally add style.css, script.js and functions.php files. An example block is provided for reference. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
+To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and `block.json` files and it's ready to be used with the WordPress block editor. You can optionally add a functions.php file. An example block is provided for reference. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
 
 ### Accessing Fields
 
