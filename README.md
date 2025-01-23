@@ -1,8 +1,8 @@
 # Timberland :evergreen_tree:
 
-Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Tailwind](https://tailwindcss.com/) and [&lt;is-land&gt;](https://github.com/11ty/is-land).
+Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Tailwind](https://tailwindcss.com/) and [&lt;is-land&gt;](https://is-land.11ty.dev/).
 
-[Alpine.js](https://github.com/alpinejs/alpine) is preconfigured and can be enabled if needed.
+[Alpine.js](https://github.com/alpinejs/alpine) is preconfigured and can be enabled globally in `theme/views/base.twig`.
 
 As of version 1.0, Timberland now uses the WordPress block editor to visually edit the site. This is made possible by the [ACF Blocks feature](https://www.advancedcustomfields.com/resources/blocks/).
 
@@ -12,29 +12,38 @@ As of version 1.0, Timberland now uses the WordPress block editor to visually ed
 2. Run `composer install` in the theme directory.
 3. Run `npm install` in the theme directory.
 4. Activate the theme in Appearance > Themes.
-5. Make sure you have installed [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/)
+5. Make sure you have installed [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/).
 
 ## Import Maps and Tailwind CLI
 
-Timberland now uses native JavaScript importmap to manage  JavaScript dependencies. This can be configured in `theme/views/base.twig`.
-
-Tailwind CLI is used to compile CSS.
-
-There is no frontend tooling beyond basic Javascript that is included in `dev.js` and `build.js`.
+- JavaScript dependencies are now managed with the native JavaScript import map feature, configured in `theme/views/base.twig`.
+- Tailwind CLI is used to process CSS.
 
 ## Development
 
-To get started, run `npm run dev` to start the development server.
+To get started, run the following command to start the development server:
+
+```bash
+npm run dev
+```
 
 ### Live Reload
 
-Live reload is enabled by default and your local development URL can be configured in `dev.js`.
+Live reload is enabled by default using [Browsersync](https://browsersync.io/). Configure your local development URL in `dev.js`.
 
 ## Production
 
-For production, ensure that you have built the assets using `npm run build` and that all dependencies are correctly managed using the importmap.
+For production, ensure the following steps are completed:
 
-If you're developing locally and moving files to your production environment, only the `theme` and `vendor` directories are needed inside the `timberland` theme directory. The theme directory structure should look like the following:
+1. Build the assets using:
+
+   ```bash
+   npm run build
+   ```
+
+2. Verify that all dependencies are correctly managed using the import map.
+
+If you're developing locally and moving files to your production environment, only the `theme` and `vendor` directories are needed inside the `timberland` theme directory. The theme directory structure should look like this:
 
 ```
   timberland/
@@ -42,7 +51,7 @@ If you're developing locally and moving files to your production environment, on
   ├── vendor/
 ```
 
-To assist with long-term caching, file hashing (e.g. `main-e1457bfd.js`) is enabled by default. This is useful for cache-busting purposes.
+To assist with long-term caching, file hashing (e.g., `main-e1457bfd.js`) is enabled by default, which is useful for cache-busting purposes.
 
 ## is-land.js and the Islands Architecture
 
@@ -54,7 +63,7 @@ Islands architecture is a design pattern where interactive components (islands) 
 
 ### Using is-land.js
 
-`is-land.js` has been preconfigured and is ready to use in your views and blocks.
+`is-land.js` has been preconfigured and is ready to use in views and blocks.
 
 Example:
 
@@ -68,47 +77,47 @@ Example:
 </is-land>
 ```
 
+[Explore more examples of how to use is-land](https://is-land.11ty.dev/).
+
 ## Blocks
 
-A block is a self-contained page section and includes its own template, functions and block.json files.
+A block is a self-contained page section that includes its own template, functions, and `block.json` file.
 
-```
-  example/
-  ├── block.json
-  ├── functions.php 
-  ├── index.twig
-```
+### Steps to Create a Block
 
-To create a new block, create a directory in `theme/blocks`. Add your `index.twig` and `block.json` files and it's ready to be used with the WordPress block editor. You can optionally add a functions.php file. An example block is provided for reference. Add editable fields by creating a new ACF field group and setting the location rule to your new block. You can now use these fields with your block in the block editor.
+1. Create a directory under `theme/blocks`.
+2. Add your `index.twig` and `block.json` files.
+3. (Optional) Add a `functions.php` file for custom functionality.
+4. Define editable fields by creating an ACF field group and linking it to the block using a location rule.
+
+An example block is provided for reference.
 
 ### Accessing Fields
 
-You access your block's fields in the index.twig file by using the `fields` variable. The example below shows how to display a block's field. We'll use "heading" as the example ACF field name, but it could be whatever name you give your field.
+You can access your block's fields in the `index.twig` file using the `fields` variable. For example:
 
-`{{ fields.heading }}`
-
-Here's an example of how to loop through a repeater field where "features" is the ACF field name and the repeater field has a heading field.
-
+```twig
+{{ fields.heading }}
 ```
+
+To loop through a repeater field (e.g., "features") with a subfield (e.g., "heading"):
+
+```twig
 {% for feature in fields.features %}
-{{ feature.heading }}
+  {{ feature.heading }}
 {% endfor %}
 ```
 
 ## Directory Structure
 
-`theme/` contains all of the WordPress core templates files.
-
-`theme/acf-json/` contain all of your Advanced Custom Fields json files. These files are automatically created/updated using ACF's Local JSON feature.
-
-`theme/assets/` contain all of your fonts, images, styles and scripts.
-
-`theme/blocks/` contain all of your site's blocks. These blocks are available to use on any page via the block editor. Each block has its own template, script and style files.
-
-`theme/patterns/` contains all of your sites's block patterns. Block Patterns are a collection of predefined blocks that you can insert into pages and posts and then customize with your own content. 
-
-`theme/views/` contains all of your Twig templates. These pretty much correspond 1 to 1 with the PHP files that respond to the WordPress template hierarchy. At the end of each PHP template, you'll notice a `Timber::render()` function whose first parameter is the Twig file where that data (or `$context`) will be used.
+- `theme/`: WordPress core template files.
+- `theme/acf-json/`: Stores Advanced Custom Fields JSON files, automatically created/updated using ACF's Local JSON feature.
+- `theme/assets/`: Contains fonts, images, styles, and scripts.
+- `theme/blocks/`: Contains the site's blocks, available for use via the block editor. Each block has its own template, script, and style files.
+- `theme/patterns/`: Contains the site's block patterns. Block patterns are predefined blocks you can insert into pages and posts and customize with your own content.
+- `theme/views/`: Contains Twig templates. These correspond 1-to-1 with the PHP files that follow the WordPress template hierarchy. Each PHP template ends with a `Timber::render()` function to pass data to its associated Twig file.
 
 ## License
 
 MIT © Chris Earls
+
