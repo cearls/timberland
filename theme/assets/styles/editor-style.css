@@ -1,7 +1,6 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "theme";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
+@plugin '@tailwindcss/typography';
+@import "./theme";
 
 body {
   @apply font-sans;

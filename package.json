@@ -2,11 +2,12 @@
   "devDependencies": {
     "@11ty/is-land": "^4.0.0",
     "@builder.io/partytown": "^0.10.2",
-    "@tailwindcss/typography": "^0.5.15",
+    "@tailwindcss/cli": "^4.0.0",
+    "@tailwindcss/typography": "^0.5.16",
     "browser-sync": "^3.0.3",
     "crypto": "^1.0.1",
     "fs": "^0.0.1-security",
-    "tailwindcss": "^3.4.16"
+    "tailwindcss": "^4.0.0"
   },
   "scripts": {
     "dev": "node dev.js",

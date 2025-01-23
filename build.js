@@ -26,12 +26,11 @@ const styles = [
 ];
 
 styles.forEach(({ input, output }) => {
-  execSync(`npx tailwindcss -i ${input} -o ${output} --minify`, { stdio: 'inherit' });
+  execSync(`npx @tailwindcss/cli -i ${input} -o ${output} --minify`, { stdio: 'inherit' });
 
   const fileContents = fs.readFileSync(output);
   const hash = crypto.createHash('md5').update(fileContents).digest('hex').slice(0, 8);
 
-  // Rename the file with the hash
   const ext = path.extname(output);
   const baseName = path.basename(output, ext);
   const newFileName = `${baseName}.${hash}${ext}`;
