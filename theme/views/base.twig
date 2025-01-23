@@ -13,6 +13,7 @@
         "imports": {
             "is-land": "{{ theme.uri }}/assets/javascript/is-land.js",
             "is-land-autoinit": "{{ theme.uri }}/assets/javascript/is-land-autoinit.js"
+            {# "alpinejs": "https://esm.sh/alpinejs" #}
         }
     }
     </script>
@@ -22,6 +23,9 @@
     <script type="module">
     import { Island } from "is-land";
     import "is-land-autoinit";
+    {# import { Alpine } from "alpinejs";
+    window.Alpine = Alpine;
+    Alpine.start(); #}
     </script>
     <!-- Start Partytown -->
     {# <script>

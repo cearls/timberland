@@ -3,8 +3,6 @@
   "title": "Example",
   "description": "",
   "category": "custom",
-  "style": [ "file:./style.css" ],
-  "script": [ "file:./script.js" ],
   "acf": {
       "mode": "preview",
       "renderCallback": "acf_block_render_callback"
