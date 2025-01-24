@@ -21,15 +21,27 @@ As of version 1.0, Timberland now uses the WordPress block editor to visually ed
 
 ## Development
 
-To get started, run the following command to start the development server:
+To start local development, follow these steps:
+
+1. Ensure you have completed the installation steps.
+2. Create a `.env` file to define your local development URL for Browsersync. You can do this by copying the `.env.example` file:
+   ```bash
+   cp .env.example .env
+   ```
+3. Open the `.env` file and update the `BROWSER_SYNC_PROXY` value to match your local WordPress site URL (e.g., `http://example.test`).
+
+### Starting the Development Server
+
+Run the following command to start the development server:
 
 ```bash
 npm run dev
 ```
 
-### Live Reload
-
-Live reload is enabled by default using [Browsersync](https://browsersync.io/). Configure your local development URL in `dev.js`.
+This will execute the `dev.js` script located in the `build/` directory. It will:
+- Compile your CSS using Tailwind CLI.
+- Watch for changes in your theme files (Twig, PHP, CSS, JS).
+- Start Browsersync for live reloading.
 
 ## Production
 
@@ -38,8 +50,13 @@ For production, ensure the following steps are completed:
 1. Build the assets using:
 
    ```bash
-   npm run build
+   npm run prod
    ```
+
+   This will execute the `prod.js` script located in the `build/` directory. It will:
+   - Clean the `dist` directory.
+   - Compile and minify your CSS.
+   - Generate hashed filenames for long-term caching (e.g., `main-e1457bfd.css`).
 
 2. Verify that all dependencies are correctly managed using the import map.
 
@@ -51,7 +68,9 @@ If you're developing locally and moving files to your production environment, on
   ├── vendor/
 ```
 
-To assist with long-term caching, file hashing (e.g., `main-e1457bfd.js`) is enabled by default, which is useful for cache-busting purposes.
+### Caching and File Hashing
+
+To assist with long-term caching, file hashing (e.g., `main-e1457bfd.css`) is enabled by default, which is useful for cache-busting purposes.
 
 ## is-land.js and the Islands Architecture
 

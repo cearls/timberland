@@ -7,10 +7,11 @@
     "browser-sync": "^3.0.3",
     "crypto": "^1.0.1",
     "fs": "^0.0.1-security",
-    "tailwindcss": "^4.0.0"
+    "tailwindcss": "^4.0.0",
+    "dotenv": "^16.4.7"
   },
   "scripts": {
-    "dev": "node dev.js",
-    "build": "node build.js"
+    "dev": "node build/dev.js",
+    "prod": "node build/prod.js"
   }
 }
