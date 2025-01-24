@@ -1,6 +1,6 @@
 # Timberland :evergreen_tree:
 
-Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Tailwind](https://tailwindcss.com/) and [&lt;is-land&gt;](https://is-land.11ty.dev/).
+Timberland is an opinionated WordPress theme using [Timber](https://www.upstatement.com/timber/), [Advanced Custom Fields Pro](https://www.advancedcustomfields.com/), [Tailwind](https://tailwindcss.com/), [is-land](https://is-land.11ty.dev/), and the native JavaScript import map feature.
 
 [Alpine.js](https://github.com/alpinejs/alpine) is preconfigured and can be enabled globally in `theme/views/base.twig`.
 
