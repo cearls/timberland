@@ -83,14 +83,16 @@ class Timberland extends Timber\Site {
 			if ( $vite_env === 'production' || is_admin() ) {
 				$js_file = 'theme/assets/main.js';
 				wp_enqueue_style( 'main', $dist_uri . '/' . $manifest[ $js_file ]['css'][0] );
+				$strategy = is_admin() ? 'async' : 'defer';
+				$in_footer = is_admin() ? false : true;
 				wp_enqueue_script(
 					'main',
 					$dist_uri . '/' . $manifest[ $js_file ]['file'],
 					array(),
 					'',
 					array(
-						'strategy'  => 'defer',
-						'in_footer' => true,
+						'strategy'  => $strategy,
+						'in_footer' => $in_footer,
 					)
 				);
 
