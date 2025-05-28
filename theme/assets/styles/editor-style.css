@@ -1,18 +1,18 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "theme";
-@import "tailwindcss/utilities";
+@import 'tailwindcss';
+@import './theme.css';
+
+@plugin '@tailwindcss/typography';
 
 body {
   @apply font-sans;
 }
 
 .wp-block{
-  @apply max-w-screen-xl;
+  @apply max-w-(--breakpoint-xl);
 }
 
 .wp-block-post-content {
-  @apply max-w-screen-xl mx-auto my-6;
+  @apply max-w-(--breakpoint-xl) mx-auto my-6;
 }
 
 .mce-content-body, .acf_content, .mceContentBody {

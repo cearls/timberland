@@ -1,7 +1,7 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "theme";
-@import "tailwindcss/utilities";
+@import 'tailwindcss';
+@import './theme.css';
+
+@plugin '@tailwindcss/typography';
 
 body.admin-bar {
     max-height: calc(100vh - 32px);
