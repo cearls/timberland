@@ -2,7 +2,7 @@
 /**
  * @package WordPress
  * @subpackage Timberland
- * @since Timberland 2.1.0
+ * @since Timberland 2.2.0
  */
 
 require_once dirname( __DIR__ ) . '/vendor/autoload.php';
@@ -151,8 +151,8 @@ function acf_block_render_callback( $block, $content ) {
 	$context['post']   = Timber::get_post();
 	$context['block']  = $block;
 	$context['fields'] = get_fields();
-    $block_name        = explode( '/', $block['name'] )[1];
-    $template          = 'blocks/'. $block_name . '/index.twig';
+	$block_name        = explode( '/', $block['name'] )[1];
+	$template          = 'blocks/'. $block_name . '/index.twig';
 
 	Timber::render( $template, $context );
 }
